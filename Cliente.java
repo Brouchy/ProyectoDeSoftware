@@ -1,7 +1,9 @@
 
 
 import javax.swing.*;
-import java.awt.event.*;;
+import java.awt.event.*;
+import java.io.IOException;
+import java.net.*;
 
 
 public class Cliente {
@@ -57,6 +59,12 @@ class LaminaMarcoCliente extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(campo1.getText());
+			try {
+				Socket misocket = new Socket("localhost",9999);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 		
 	}
