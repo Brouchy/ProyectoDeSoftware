@@ -3,6 +3,8 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.*;
 
 public class Servidor  {
 
@@ -16,7 +18,7 @@ public class Servidor  {
 	}	
 }
 
-class MarcoServidor extends JFrame {
+class MarcoServidor extends JFrame implements Runnable {
 	
 	public MarcoServidor(){
 		
@@ -31,10 +33,31 @@ class MarcoServidor extends JFrame {
 		milamina.add(areatexto,BorderLayout.CENTER);
 		
 		add(milamina);
-		
+	
 		setVisible(true);
+		//creamos un hilo cuando carga la aplicacion ejecuta el hilo
+		Thread mihilo= new Thread(this);
+		 mihilo.start();
 		
 		}
 	
 	private	JTextArea areatexto;
+
+	@Override
+	//metodo que va a estar a la escucha
+	public void run() {
+		// System.out.println("estoy a la escucha");
+		//ahora tenemos a la escucha a nuestra aplicaicon
+		try {
+			ServerSocket servidor = new ServerSocket(9999);
+			//tenemos que hacer que acepte cual quier conexion que le venga del esterior
+			Socket misocket=servidor.accept();
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }
