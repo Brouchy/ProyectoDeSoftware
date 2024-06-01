@@ -2,6 +2,7 @@
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
@@ -60,9 +61,18 @@ class LaminaMarcoCliente extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(campo1.getText());
 			try {
+				//tenes que comunicarte con el servidor papa 
 				Socket misocket = new Socket("localhost",9999);
+				//los datos salen del cliente que estamos progrmando
+				//el flujo de datos va a a siruclar por mi socket
+				DataOutputStream flujo_salida= new DataOutputStream(misocket.getOutputStream());
+				//en el flijko de datos de salida viaja el texto del campo1 escribe en el texto lo que hay en el campo 1
+				flujo_salida.writeUTF(campo1.getText());
+				//tenemos que cerrar el flujo
+				flujo_salida.close();
+
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				System.out.println(e1.getMessage());
 			}
 			
 		}
