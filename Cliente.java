@@ -39,10 +39,17 @@ class MarcoCliente extends JFrame{
 class LaminaMarcoCliente extends JPanel{
 	
 	public LaminaMarcoCliente(){
+		nick = new JTextField(5);
+		add(nick);
 	
-		JLabel texto=new JLabel("CLIENTE");
+		JLabel texto=new JLabel("CHAT-");
 		
 		add(texto);
+		ip= new JTextField(10);
+		add(ip);
+		//CONSTRUIMOS NUESTRA AREA DE TEXTO
+		campochat= new JTextArea(12,20);
+		add(campochat);
 	
 		campo1=new JTextField(20);
 	
@@ -82,7 +89,9 @@ class LaminaMarcoCliente extends JPanel{
 		
 		
 		
-	private JTextField campo1;
+	private JTextField campo1, nick,ip;
+	//creamos campo de texto 
+	private JTextArea campochat;
 	
 	private JButton miboton;
 	

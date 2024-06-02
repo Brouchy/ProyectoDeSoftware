@@ -3,6 +3,7 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.*;
 
@@ -50,10 +51,19 @@ class MarcoServidor extends JFrame implements Runnable {
 		//ahora tenemos a la escucha a nuestra aplicaicon
 		try {
 			ServerSocket servidor = new ServerSocket(9999);
+
+			while(true)
+			{
 			//tenemos que hacer que acepte cual quier conexion que le venga del esterior
 			Socket misocket=servidor.accept();
-
-
+			//ahora va a ver un flujo de datos que va a utilizar como medio de transporte este socket
+			DataInputStream flujo_entrada= new DataInputStream(misocket.getInputStream());
+			//saber leer lo que viene en ese flujo de entrada
+			String mensaje_texto= flujo_entrada.readUTF();
+			areatexto.append("\n"+mensaje_texto);
+			//cerrar la conexion
+			misocket.close();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
