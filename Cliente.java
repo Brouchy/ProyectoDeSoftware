@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.*;
 
 
@@ -82,6 +84,12 @@ class LaminaMarcoCliente extends JPanel{
 				datos.setNick(nick.getText());
 				datos.setIp(ip.getText());
 				datos.setMensaje(campo1.getText());
+				//para enviar un paquete utiliamos creamos el flujo desalida para enviar nuestro paquete
+				ObjectOutputStream paquete_datos= new ObjectOutputStream(misocket.getOutputStream());
+				paquete_datos.writeObject(paquete_datos);
+				misocket.close();
+
+				
 
 			} catch (IOException e1) {
 				System.out.println(e1.getMessage());
@@ -104,7 +112,7 @@ class LaminaMarcoCliente extends JPanel{
 
 //clase para crear el objeto para enviar el paquete con toda la info
 
-class PaqueteEnvio{
+class PaqueteEnvio implements Serializable{
 
 	private String nick,ip,mensaje;
 
