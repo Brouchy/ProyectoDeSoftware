@@ -72,11 +72,16 @@ class LaminaMarcoCliente extends JPanel{
 				Socket misocket = new Socket("localhost",9999);
 				//los datos salen del cliente que estamos progrmando
 				//el flujo de datos va a a siruclar por mi socket
-				DataOutputStream flujo_salida= new DataOutputStream(misocket.getOutputStream());
+				//DataOutputStream flujo_salida= new DataOutputStream(misocket.getOutputStream());
 				//en el flijko de datos de salida viaja el texto del campo1 escribe en el texto lo que hay en el campo 1
-				flujo_salida.writeUTF(campo1.getText());
+				//flujo_salida.writeUTF(campo1.getText());
 				//tenemos que cerrar el flujo
-				flujo_salida.close();
+				//flujo_salida.close();
+				//nuevo video empaquetamos el objeto
+				PaqueteEnvio datos = new PaqueteEnvio();
+				datos.setNick(nick.getText());
+				datos.setIp(ip.getText());
+				datos.setMensaje(campo1.getText());
 
 			} catch (IOException e1) {
 				System.out.println(e1.getMessage());
@@ -95,4 +100,41 @@ class LaminaMarcoCliente extends JPanel{
 	
 	private JButton miboton;
 	
+}
+
+//clase para crear el objeto para enviar el paquete con toda la info
+
+class PaqueteEnvio{
+
+	private String nick,ip,mensaje;
+
+    // Getter para nick
+    public String getNick() {
+        return nick;
+    }
+
+    // Setter para nick
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    // Getter para ip
+    public String getIp() {
+        return ip;
+    }
+
+    // Setter para ip
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    // Getter para mensaje
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    // Setter para mensaje
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
 }
