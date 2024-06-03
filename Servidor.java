@@ -80,8 +80,10 @@ class MarcoServidor extends JFrame implements Runnable {
 			//creamos un puente un socket tenemos que renviar el paquete
 			Socket enviaDestinatario= new Socket(ip,9090);
 			ObjectOutputStream paqueteRenvio=new ObjectOutputStream(enviaDestinatario.getOutputStream());
+			paqueteRenvio.writeObject(paquete_recibido);
 
-			
+			paqueteRenvio.close();
+			enviaDestinatario.close();
 			misocket.close();
 			}
 		} catch (IOException e) {

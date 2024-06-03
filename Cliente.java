@@ -3,6 +3,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.*;
@@ -37,7 +38,7 @@ class MarcoCliente extends JFrame{
 	
 }
 
-class LaminaMarcoCliente extends JPanel{
+class LaminaMarcoCliente extends JPanel implements Runnable{
 	
 	public LaminaMarcoCliente(){
 		nick = new JTextField(5);
@@ -60,7 +61,8 @@ class LaminaMarcoCliente extends JPanel{
 		EnviarTexto mievento= new EnviarTexto();
 		miboton.addActionListener(mievento);
 		add(miboton);	
-
+		Thread mihilo=new Thread(this);
+		mihilo.start();
 	}
 	private class EnviarTexto implements ActionListener
 	{
@@ -70,7 +72,7 @@ class LaminaMarcoCliente extends JPanel{
 			System.out.println(campo1.getText());
 			try {
 				//tenes que comunicarte con el servidor papa 
-				Socket misocket = new Socket("localhost",9999);
+				Socket misocket = new Socket( 192.168.1.53,9999);
 				//los datos salen del cliente que estamos progrmando
 				//el flujo de datos va a a siruclar por mi socket
 				//DataOutputStream flujo_salida= new DataOutputStream(misocket.getOutputStream());
@@ -106,6 +108,25 @@ class LaminaMarcoCliente extends JPanel{
 	private JTextArea campochat;
 	
 	private JButton miboton;
+	//tenemos que codificar para que este a la escucha
+	@Override
+	public void run() {
+		try{
+			ServerSocket servidor_cliente= new ServerSocket(9090);
+			Socket cliente;
+			PaqueteEnvio paqueteRecibido;
+			while (true) {
+				cliente=servidor_cliente.accept();
+				ObjectInputStream flujoEntrada=new ObjectInputStream(cliente.getInputStream());
+				paqueteRecibido=(PaqueteEnvio) flujoEntrada.readObject();
+				campochat.append("\n"+paqueteRecibido.getNick()+": "+paqueteRecibido.getMensaje());
+				
+			}
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
 	
 }
 
