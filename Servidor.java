@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.*;
 
 
@@ -76,6 +77,11 @@ class MarcoServidor extends JFrame implements Runnable {
 			ip=paquete_recibido.getIp();
 			mensaje=paquete_recibido.getMensaje();
 			areatexto.append("\n"+nick+" : "+mensaje+" para "+ip);
+			//creamos un puente un socket tenemos que renviar el paquete
+			Socket enviaDestinatario= new Socket(ip,9090);
+			ObjectOutputStream paqueteRenvio=new ObjectOutputStream(enviaDestinatario.getOutputStream());
+
+			
 			misocket.close();
 			}
 		} catch (IOException e) {
