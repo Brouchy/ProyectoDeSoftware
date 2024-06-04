@@ -69,10 +69,11 @@ class LaminaMarcoCliente extends JPanel implements Runnable{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(campo1.getText());
+			//System.out.println(campo1.getText());
+			campochat.append("\n"+campo1.getText());
 			try {
 				//tenes que comunicarte con el servidor papa 
-				Socket misocket = new Socket( 192.168.1.53,9999);
+				Socket misocket = new Socket("192.168.1.53",9999);
 				//los datos salen del cliente que estamos progrmando
 				//el flujo de datos va a a siruclar por mi socket
 				//DataOutputStream flujo_salida= new DataOutputStream(misocket.getOutputStream());
